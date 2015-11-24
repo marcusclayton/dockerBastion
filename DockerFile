@@ -1,0 +1,16 @@
+FROM alpine:latest
+MAINTAINER Skip Cruse
+LABEL version="1.0"
+LABEL description="Basic command shell with limited commands suitible for secured SSH host ephemeral shells"
+
+
+RUN apk upgrade --no-self-upgrade --available
+RUN apk add --update openssh vim bash
+RUN rm -rf /var/cache/apk/*
+RUN rm -rf /sbin/
+RUN rm -rf /usr/bin/wget
+RUN adduser -D shell -s /bin/bash
+RUN echo 'export PS1="\u@\h \t:\$ " ' >/home/shell/.bash_profile
+#RUN hostname bastion
+RUN chmod -w /home/shell
+RUN rm -rf /bin/busybox
